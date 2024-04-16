@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 1px;
+            /* Decreased padding */
+            border-radius: 0;
+            /* Removed border-radius */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            /* Align items to the ends */
+            align-items: center;
+            /* Center vertically */
+        }
+
+        footer {
+            background-color: #444;
+            /* Dark grey background */
+            color: white;
+            text-align: center;
+            padding: 5px 0;
+            /* Adjust padding */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            margin: 0;
+            height: auto;
+            /* Set height to auto */
+        }
+
+
+        .container {
+            max-width: 2100px;
+            margin: 80px auto 40px;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style-type: none;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .school-name {
+            margin-left: 10px;
+            /* Adjust margin as needed */
+        }
+
+        .container {
+            max-width: 2100px;
+            margin: 80px auto 40px;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style-type: none;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn {
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+        }
+
+        ogin-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .home-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        a.btn-primary {
+            display: block;
+            width: 150px;
+            margin: 20px auto 0;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span class="school-name">{{ school.name }}</span>
+        <div>
+            <button class="home-btn" onclick="redirectToHome()">Home</button>
+            <button class="login-btn" onclick="redirectToAdminLogin()">Admin Login</button>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </header>
+</body>
+
+</html>
+
+
+
+<div class="container">
+    <h1>{{ school.name }} Details</h1>
+    <div class="btn-group mb-3">
+        <button type="button" class="btn btn-primary" onclick="showStudents()">Students</button>
+        <button type="button" class="btn btn-primary" onclick="showNonStudents()">Non-Students</button>
+        <button type="button" class="btn btn-primary" onclick="showTeachers()">Teachers</button>
+    </div>
+
+    <!-- Students section -->
+    <!-- Students section -->
+    <div id="students" style="display: none;">
+        <h3>Students</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Student Image</th>
+                    <th>Email</th>
+                    <th>Date of Birth</th>
+                    <th>Phone Number</th> <!-- Add phone number column -->
+                    <th>Father's Name</th>
+                    <th>Father Image</th>
+                    <th>Father's Occupation</th>
+                    <th>Father's Date of Birth</th>
+                    <th>Father's Wedding Date</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set student_counter = 1 %}
+                {% for student in students %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ student.first_name }} {{ student.middle_name }} {{ student.last_name }}</td>
+                    <td>
+                        {% if student.student_image %}
+                        <img src="{{ student.student_image_url }}" width="100">
+                        {% endif %}
+                    </td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.dob }}</td>
+                    <td>{{ student.phone_number }}</td> <!-- Display phone number -->
+                    <td>{{ student.father_first_name }} {{ student.father_last_name }}</td>
+                    <td>
+                        {% if student.father_image %}
+                        <img src="{{ student.father_image_url }}" width="100">
+                        {% endif %}
+                    </td>
+                    <td>{{ student.father_occupation }}</td>
+                    <td>{{ student.father_dob }}</td>
+                    <td>{{ student.father_wedding_date }}</td>
+                    <td>{{ student.address_line1 }}, {{ student.address_line2 }}, {{ student.address_line3 }}, {{
+                        student.pin_code }}</td>
+
+                </tr>
+                {% set student_counter = student_counter + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Teachers section -->
+    <div id="teachers" style="display: none;">
+        <h3>Teachers</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Teacher Image</th>
+                    <th>Subject</th>
+                    <th>Email</th>
+                    <th>Date of Birth</th>
+                    <th>Phone Number</th> <!-- Add phone number column -->
+                    <th>Father's Name</th>
+                    <th>Father Image</th>
+                    <th>Father's Occupation</th>
+                    <th>Father's Date of Birth</th>
+                    <th>Father's Wedding Date</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set teacher_counter = 1 %}
+                {% for teacher in teachers %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ teacher.first_name }} {{ teacher.middle_name }} {{ teacher.last_name }}</td>
+                    <td>
+                        {% if teacher.teacher_image %}
+                        <img src="{{ teacher.teacher_image_url }}" width="100">
+                        {% endif %}
+                    </td>
+                    <td>{{ teacher.subject }}</td>
+                    <td>{{ teacher.email }}</td>
+                    <td>{{ teacher.dob }}</td>
+                    <td>{{ teacher.phone_number }}</td> <!-- Display phone number -->
+                    <td>{{ teacher.father_first_name }} {{ teacher.father_last_name }}</td>
+                    <td>
+                        {% if teacher.teacher_father_image %}
+                        <img src="{{ teacher.teacher_father_image_url }}" width="100">
+                        {% endif %}
+                    </td>
+                    <td>{{ teacher.father_occupation }}</td>
+                    <td>{{ teacher.father_dob }}</td>
+                    <td>{{ teacher.father_wedding_date }}</td>
+                    <td>{{ teacher.address_line1 }}, {{ teacher.address_line2 }}, {{ teacher.address_line3 }}, {{
+                        teacher.pin_code }}</td>
+                </tr>
+                {% set teacher_counter = teacher_counter + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <!-- Non-Students section -->
+    <div id="non-students" style="display: none;">
+        <h3>Non-Students</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>NON Student Image</th>
+                    <th>Email</th>
+                    <th>Date of Birth</th>
+                    <th>Phone Number</th> <!-- Add phone number column -->
+                    <th>Father's Name</th>
+                    <th>Father Image</th>
+                    <th>Father's Occupation</th>
+                    <th>Father's Date of Birth</th>
+                    <th>Father's Wedding Date</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set non_student_counter = 1 %}
+                {% for non_student in non_students %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ non_student.first_name }} {{ non_student.middle_name }} {{ non_student.last_name }}</td>
+                    <td>
+                        {% if non_student.non_student_image %}
+                        <img src="{{ non_student.non_student_image_url }}" width="100">
+                        {% endif %}
+                    </td>
+                    <td>{{ non_student.email }}</td>
+                    <td>{{ non_student.dob }}</td>
+                    <td>{{ non_student.phone_number }}</td> <!-- Display phone number -->
+                    <td>{{ non_student.father_first_name }} {{ non_student.father_last_name }}</td>
+                    <td>
+                        {% if non_student.non_student_father_image %}
+                        <img src="{{ non_student.non_student_father_image_url }}" width="100">
+                        {% endif %}
+                    </td>
+
+                    <td>{{ non_student.father_occupation }}</td>
+                    <td>{{ non_student.father_dob }}</td>
+                    <td>{{ non_student.father_wedding_date }}</td>
+                    <td>{{ non_student.address_line1 }}, {{ non_student.address_line2 }}, {{
+                        non_student.address_line3 }}, {{ non_student.pin_code }}</td>
+
+
+                </tr>
+                {% set non_student_counter = non_student_counter + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <a href="#" onclick="showAllDetails()" class="btn btn-primary">View All Details</a>
+</div>
+
+<footer>
+
+    <p>&copy; 2024 Your App Name. All rights reserved.</p>
+
+</footer>
+
+<script>
+    function showStudents() {
+        document.getElementById('students').style.display = 'block';
+        document.getElementById('teachers').style.display = 'none';
+        document.getElementById('non-students').style.display = 'none';
+    }
+
+    function showTeachers() {
+        document.getElementById('students').style.display = 'none';
+        document.getElementById('teachers').style.display = 'block';
+        document.getElementById('non-students').style.display = 'none';
+    }
+
+    function showNonStudents() {
+        document.getElementById('students').style.display = 'none';
+        document.getElementById('teachers').style.display = 'none';
+        document.getElementById('non-students').style.display = 'block';
+    }
+
+    function showAllDetails() {
+        document.getElementById('students').style.display = 'block';
+        document.getElementById('teachers').style.display = 'block';
+        document.getElementById('non-students').style.display = 'block';
+    }
+    function redirectToAdminLogin() {
+        window.location.href = "/admin/login";
+    }
+    function redirectToHome() {
+        window.location.href = "/";
+    }
+    function logout() {
+        window.location.href = "/";
+    }
+</script>
+</body>
+
+</html>
